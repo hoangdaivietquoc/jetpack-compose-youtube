@@ -1,7 +1,7 @@
 package com.frank.jetpackcomposeyoutube
 
 data class Video(
-    val videoTitle: String,
+    val title: String,
     val views: Int,
     val timeAgo: String
 )

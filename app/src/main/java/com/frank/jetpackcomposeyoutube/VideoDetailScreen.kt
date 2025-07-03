@@ -22,7 +22,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.frank.jetpackcomposeyoutube.ui.theme.JetpackComposeYoutubeTheme
 
-
+private val commonTextStyle = TextStyle(
+    color = Color(0xff6C6C6C),
+    fontWeight = FontWeight.Normal,
+    fontSize = 12.sp
+)
+@Composable
+fun MySpacerHeight(height: Int = 12){
+    Spacer(modifier = Modifier.height(height.dp))
+}
 @Composable
 fun VideoDetailScreen(modifier: Modifier = Modifier, openCategoryScreen: () -> Unit) {
 
@@ -37,8 +45,7 @@ fun VideoActionItem(modifier: Modifier = Modifier, @DrawableRes icon: Int, name:
             contentDescription = null,
             modifier = Modifier.size(24.dp)
         )
-        Spacer(modifier = Modifier.height(2.dp))
-
+        MySpacerHeight(height = 2)
         Text(name, style = TextStyle(fontSize = 12.sp))
     }
 }
@@ -46,27 +53,21 @@ fun VideoActionItem(modifier: Modifier = Modifier, @DrawableRes icon: Int, name:
 @Composable
 fun VideoAction(modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(12.dp),
+        modifier = modifier.fillMaxWidth().padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-
         VideoActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
         VideoActionItem(icon = R.drawable.ic_thumbdown, name = "200K")
         VideoActionItem(icon = R.drawable.ic_share, name = "Share")
         VideoActionItem(icon = R.drawable.ic_download, name = "Download")
         VideoActionItem(icon = R.drawable.ic_save_to_playlist, name = "Save")
-
     }
 }
 
 @Composable
 fun VideoDetailInfo(
     modifier: Modifier = Modifier,
-    videoTitle: String,
-    views: Int,
-    timeAgo: String
+    videoTitle: String, views: Int, timeAgo: String
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
 
@@ -82,25 +83,11 @@ fun VideoDetailInfo(
                 modifier = Modifier.size(24.dp)
             )
         }
-        Spacer(modifier = Modifier.height(12.dp))
+        MySpacerHeight()
         Row {
-            Text(
-                "$views views",
-                style = TextStyle(
-                    color = Color(0xff6C6C6C),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
-                )
-            )
-            Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                timeAgo,
-                style = TextStyle(
-                    color = Color(0xff6C6C6C),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
-                )
-            )
+            Text(text = "$views views", style = commonTextStyle)
+            MySpacerHeight(height = 4)
+            Text(text = timeAgo, style = commonTextStyle)
         }
     }
 }
@@ -109,7 +96,7 @@ fun VideoDetailInfo(
 fun VideoDetail(
     modifier: Modifier = Modifier,
     @DrawableRes videoThumb: Int,
-    videoTitle: String,
+    title: String,
     views: Int,
     timeAgo: String
 ) {
@@ -118,33 +105,21 @@ fun VideoDetail(
         Image(
             painter = painterResource(id = videoThumb), contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16f / 9f)
+            modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f)
         )
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
-        ) {
-
+        Column(modifier = Modifier.fillMaxWidth().padding(top = 12.dp)) {
             VideoDetailInfo(
-                videoTitle = videoTitle,
-                views = views,
-                timeAgo = timeAgo,
+                videoTitle = title, views = views, timeAgo = timeAgo,
                 modifier = Modifier.padding(horizontal = 12.dp)
             )
-
             VideoAction()
-
         }
-
     }
 }
 
 @Composable
-fun NextVideoInfo(videoTitle: String, views: Int, timeAgo: String, modifier: Modifier = Modifier) {
+fun NextVideoInfo(title: String, views: Int, timeAgo: String, modifier: Modifier = Modifier) {
 
     ConstraintLayout(modifier = modifier.fillMaxWidth()) {
         val (imgAvatar, tvVideoTitle, layoutInfo, imgMore) = createRefs()
@@ -152,8 +127,7 @@ fun NextVideoInfo(videoTitle: String, views: Int, timeAgo: String, modifier: Mod
         Image(
             painter = painterResource(id = R.drawable.jetpack_compose),
             contentDescription = null,
-            modifier = Modifier
-                .size(36.dp)
+            modifier = Modifier.size(36.dp)
                 .clip(CircleShape)
                 .constrainAs(imgAvatar) {
                     top.linkTo(parent.top)
@@ -164,15 +138,14 @@ fun NextVideoInfo(videoTitle: String, views: Int, timeAgo: String, modifier: Mod
         Image(
             painter = painterResource(id = R.drawable.ic_more),
             contentDescription = null,
-            modifier = Modifier
-                .size(24.dp)
+            modifier = Modifier.size(24.dp)
                 .constrainAs(imgMore) {
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                 }
         )
 
-        Text(text = videoTitle, style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold),
+        Text(text = title, style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.constrainAs(tvVideoTitle) {
                 start.linkTo(imgAvatar.end, margin = 4.dp)
                 end.linkTo(imgMore.start, margin = 4.dp)
@@ -185,23 +158,9 @@ fun NextVideoInfo(videoTitle: String, views: Int, timeAgo: String, modifier: Mod
             top.linkTo(tvVideoTitle.bottom, margin = 4.dp)
             start.linkTo(tvVideoTitle.start)
         }) {
-            Text(
-                "$views views",
-                style = TextStyle(
-                    color = Color(0xff6C6C6C),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
-                )
-            )
+            Text(text ="$views views", style = commonTextStyle)
             Spacer(modifier = Modifier.width(4.dp))
-            Text(
-                timeAgo,
-                style = TextStyle(
-                    color = Color(0xff6C6C6C),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
-                )
-            )
+            Text(text = timeAgo, style = commonTextStyle)
         }
     }
 
@@ -214,54 +173,16 @@ fun NextVideo(videoTitle: String, views: Int, timeAgo: String, modifier: Modifie
             painter = painterResource(id = R.drawable.thumbnail_next_video),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(16f / 9f)
+            modifier = Modifier.fillMaxWidth().aspectRatio(16f / 9f)
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        MySpacerHeight()
         NextVideoInfo(
-            videoTitle = videoTitle,
-            views = views,
-            timeAgo = timeAgo,
+            title = videoTitle, views = views, timeAgo = timeAgo,
             modifier = Modifier.padding(horizontal = 12.dp)
         )
     }
 }
 
-
-
-@Composable
-@Preview(name = "Video Info Item Preview", showBackground = true)
-fun VideoActionItemPreview() {
-    JetpackComposeYoutubeTheme {
-        VideoActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
-    }
-}
-
-@Composable
-@Preview(name = "Video Info Preview", showBackground = true)
-fun VideoActionPreview() {
-    JetpackComposeYoutubeTheme {
-        VideoAction()
-    }
-}
-
-@Composable
-@Preview(name = "video detail preview", showBackground = true)
-fun VideoDetailPreview() {
-    VideoDetail(
-        videoThumb = R.drawable.video_thumbnail,
-        videoTitle = "Android Jetpack Compose List and Grid",
-        views = 999,
-        timeAgo = "1 day ago"
-    )
-}
-
-@Composable
-@Preview(name = "Next video preview", showBackground = true)
-fun NextVideoPreview() {
-    NextVideo(videoTitle = "Jetpack Compose Basic Layout", views = 22, timeAgo = " 20 years ago")
-}
 
 @Composable
 @Preview(name = "Video Detail Preview", showSystemUi = true, showBackground = true)
@@ -270,5 +191,32 @@ fun VideoDetailScreenPreview() {
         VideoDetailScreen(){
 
         }
+    }
+}
+
+@Composable
+@Preview(name = "Home Screen Preview", showSystemUi = true, showBackground = true)
+fun HomeScreen01(){
+    JetpackComposeYoutubeTheme {
+        VideoDetailScreen {}
+        Column () {
+
+            // NextVideoPreview
+            NextVideo(videoTitle = "Jetpack Compose Basic Layout", views = 22, timeAgo = " 20 years ago")
+            MySpacerHeight(20)
+            Text(text = "VideoDetail Preview", color = Color.Blue)
+            VideoDetail(
+                videoThumb = R.drawable.video_thumbnail,
+                title = "Android Jetpack Compose List and Grid",
+                views = 999,
+                timeAgo = "1 day ago"
+            )
+            MySpacerHeight(20)
+            Text(text ="Video Action Item", color = Color.Blue)
+            VideoActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
+            MySpacerHeight(10)
+            Text(text = "Video Action", color = Color.Blue)
+            VideoAction()
+            }
     }
 }
