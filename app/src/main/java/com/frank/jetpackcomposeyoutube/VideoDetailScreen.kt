@@ -37,7 +37,7 @@ fun VideoDetailScreen(modifier: Modifier = Modifier, openCategoryScreen: () -> U
 }
 
 @Composable
-fun VideoActionItem(modifier: Modifier = Modifier, @DrawableRes icon: Int, name: String) {
+fun ActionItem(modifier: Modifier = Modifier, @DrawableRes icon: Int, name: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
 
         Icon(
@@ -56,11 +56,11 @@ fun VideoAction(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth().padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        VideoActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
-        VideoActionItem(icon = R.drawable.ic_thumbdown, name = "200K")
-        VideoActionItem(icon = R.drawable.ic_share, name = "Share")
-        VideoActionItem(icon = R.drawable.ic_download, name = "Download")
-        VideoActionItem(icon = R.drawable.ic_save_to_playlist, name = "Save")
+        ActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
+        ActionItem(icon = R.drawable.ic_thumbdown, name = "200K")
+        ActionItem(icon = R.drawable.ic_share, name = "Share")
+        ActionItem(icon = R.drawable.ic_download, name = "Download")
+        ActionItem(icon = R.drawable.ic_save_to_playlist, name = "Save")
     }
 }
 
@@ -196,14 +196,15 @@ fun VideoDetailScreenPreview() {
 
 @Composable
 @Preview(name = "Home Screen Preview", showSystemUi = true, showBackground = true)
-fun HomeScreen01(){
+fun HomeScreen01Preview(){
     JetpackComposeYoutubeTheme {
-        VideoDetailScreen {}
+//        VideoDetailScreen {}
         Column () {
 
             // NextVideoPreview
+            Text(text = "NextVideo", color = Color.Blue, modifier = Modifier.padding(top = 16.dp))
             NextVideo(videoTitle = "Jetpack Compose Basic Layout", views = 22, timeAgo = " 20 years ago")
-            MySpacerHeight(20)
+            MySpacerHeight(6)
             Text(text = "VideoDetail Preview", color = Color.Blue)
             VideoDetail(
                 videoThumb = R.drawable.video_thumbnail,
@@ -211,10 +212,10 @@ fun HomeScreen01(){
                 views = 999,
                 timeAgo = "1 day ago"
             )
-            MySpacerHeight(20)
-            Text(text ="Video Action Item", color = Color.Blue)
-            VideoActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
-            MySpacerHeight(10)
+            MySpacerHeight(6)
+            Text(text ="Action Item", color = Color.Blue)
+            ActionItem(icon = R.drawable.ic_thumbup, name = "25.6K")
+            MySpacerHeight(6)
             Text(text = "Video Action", color = Color.Blue)
             VideoAction()
             }
